@@ -2,24 +2,18 @@ import { db, auth } from "./firebase.js";
 
 import {
     collection,
-    getDocs,
-    query,
-    orderBy,
-    limit,
-    where
-} from
-"https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+    getDocs
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 import {
     onAuthStateChanged,
     signOut
-} from
-"https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 
-// ==============================
-// ELEMENTS
-// ==============================
+// ========================================
+// HTML ELEMENTS
+// ========================================
 
 const destinationCount =
     document.getElementById("destinationCount");
@@ -43,29 +37,25 @@ const reviewsList =
     document.getElementById("reviewsList");
 
 
-// ==============================
-// CHECK ADMIN LOGIN
-// ==============================
+// ========================================
+// CHECK LOGIN
+// ========================================
 
 onAuthStateChanged(auth, async (user) => {
 
     if (!user) {
-
         window.location.href = "../login.html";
-
         return;
     }
-
-    // لاحقًا نضيف هنا فحص role = admin
 
     await loadDashboard();
 
 });
 
 
-// ==============================
+// ========================================
 // LOAD DASHBOARD
-// ==============================
+// ========================================
 
 async function loadDashboard() {
 
@@ -75,29 +65,33 @@ async function loadDashboard() {
 
         await loadReviews();
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
         console.error("Dashboard error:", error);
 
-    }
+        destinationsList.innerHTML =
+            `<div class="loading">
+                Could not load destinations.
+            </div>`;
 
+        reviewsList.innerHTML =
+            `<div class="loading">
+                Could not load reviews.
+            </div>`;
+    }
 }
 
 
-// ==============================
-// DESTINATIONS
-// ==============================
+// ========================================
+// LOAD DESTINATIONS
+// ========================================
 
 async function loadDestinations() {
 
-    const destinationsRef =
-        collection(db, "destinations");
-
-
     const snapshot =
-        await getDocs(destinationsRef);
+        await getDocs(
+            collection(db, "destinations")
+        );
 
 
     // Total destinations
@@ -106,26 +100,54 @@ async function loadDestinations() {
         snapshot.size;
 
 
-    // Recent destinations
+    // Convert Firestore documents to array
 
-    const recentQuery = query(
-        destinationsRef,
-        orderBy("createdAt", "desc"),
-        limit(4)
-    );
+    const destinations = [];
+
+    snapshot.forEach((doc) => {
+
+        destinations.push({
+            id: doc.id,
+            ...doc.data()
+        });
+
+    });
 
 
-    const recentSnapshot =
-        await getDocs(recentQuery);
+    // Sort by createdAt - newest first
 
+    destinations.sort((a, b) => {
+
+        const timeA =
+            a.createdAt?.toMillis?.() || 0;
+
+        const timeB =
+            b.createdAt?.toMillis?.() || 0;
+
+        return timeB - timeA;
+
+    });
+
+
+    // Show number of destinations
+    // in the small badge
+
+    newDestinationCount.textContent =
+        destinations.length + " total";
+
+
+    // Clear loading message
 
     destinationsList.innerHTML = "";
 
-    newDestinationCount.textContent =
-        recentSnapshot.size + " new";
+
+    // Show only latest 4
+
+    const recentDestinations =
+        destinations.slice(0, 4);
 
 
-    if (recentSnapshot.empty) {
+    if (recentDestinations.length === 0) {
 
         destinationsList.innerHTML =
             `<div class="loading">
@@ -136,44 +158,48 @@ async function loadDestinations() {
     }
 
 
-    recentSnapshot.forEach((doc) => {
-
-        const destination = doc.data();
+    recentDestinations.forEach((destination) => {
 
         const name =
             destination.name || "Unnamed destination";
 
-        const category =
-            destination.category || "General";
-
         const location =
             destination.location || "Jordan";
 
-        const image =
-            destination.image ||
-            "https://via.placeholder.com/80";
+        const category =
+            destination.category || "General";
 
+        /*
+            The seed currently stores:
+
+            image: "images/petra.jpg"
+
+            This is a path, not an actual image URL.
+            Therefore we don't use it as src yet.
+        */
 
         destinationsList.innerHTML += `
 
             <div class="destination-item">
 
-                <img
-                    class="destination-image"
-                    src="${image}"
-                    alt="${name}"
-                >
+                <div class="destination-image-placeholder">
+                    ${getDestinationIcon(destination.category)}
+                </div>
 
                 <div class="destination-info">
 
-                    <h4>${name}</h4>
+                    <h4>
+                        ${name}
+                    </h4>
 
-                    <p>${location}</p>
+                    <p>
+                        ${location}
+                    </p>
 
                 </div>
 
                 <span class="category">
-                    ${category}
+                    ${capitalize(category)}
                 </span>
 
                 <div>
@@ -197,63 +223,80 @@ async function loadDestinations() {
 }
 
 
-// ==============================
-// REVIEWS
-// ==============================
+// ========================================
+// LOAD REVIEWS
+// ========================================
 
 async function loadReviews() {
 
-    const reviewsRef =
-        collection(db, "reviews");
-
-
-    const allReviews =
-        await getDocs(reviewsRef);
+    const snapshot =
+        await getDocs(
+            collection(db, "reviews")
+        );
 
 
     // Total reviews
 
     reviewCount.textContent =
-        allReviews.size;
+        snapshot.size;
 
 
-    // Pending reviews
+    // Convert documents to array
 
-    const pendingQuery = query(
-        reviewsRef,
-        where("status", "==", "pending")
-    );
+    const reviews = [];
+
+    snapshot.forEach((doc) => {
+
+        reviews.push({
+            id: doc.id,
+            ...doc.data()
+        });
+
+    });
 
 
-    const pendingSnapshot =
-        await getDocs(pendingQuery);
+    // Count pending reviews
+
+    const pendingReviews =
+        reviews.filter(
+            review => review.status === "pending"
+        );
 
 
     pendingCount.textContent =
-        pendingSnapshot.size;
-
+        pendingReviews.length;
 
     pendingBadge.textContent =
-        pendingSnapshot.size + " pending";
+        pendingReviews.length + " pending";
 
 
-    // Recent reviews
+    // Sort newest first
 
-    const recentQuery = query(
-        reviewsRef,
-        orderBy("createdAt", "desc"),
-        limit(4)
-    );
+    reviews.sort((a, b) => {
+
+        const timeA =
+            a.createdAt?.toMillis?.() || 0;
+
+        const timeB =
+            b.createdAt?.toMillis?.() || 0;
+
+        return timeB - timeA;
+
+    });
 
 
-    const recentSnapshot =
-        await getDocs(recentQuery);
-
+    // Clear loading
 
     reviewsList.innerHTML = "";
 
 
-    if (recentSnapshot.empty) {
+    // Latest 4 reviews
+
+    const recentReviews =
+        reviews.slice(0, 4);
+
+
+    if (recentReviews.length === 0) {
 
         reviewsList.innerHTML =
             `<div class="loading">
@@ -264,14 +307,12 @@ async function loadReviews() {
     }
 
 
-    recentSnapshot.forEach((doc) => {
-
-        const review = doc.data();
+    recentReviews.forEach((review) => {
 
         const userName =
             review.userName || "User";
 
-        const destination =
+        const destinationName =
             review.destinationName || "Destination";
 
         const comment =
@@ -318,7 +359,7 @@ async function loadReviews() {
 
 
                 <div class="review-destination">
-                    ${destination}
+                    ${destinationName}
                 </div>
 
 
@@ -348,9 +389,9 @@ async function loadReviews() {
 }
 
 
-// ==============================
-// GET INITIALS
-// ==============================
+// ========================================
+// GET USER INITIALS
+// ========================================
 
 function getInitials(name) {
 
@@ -375,9 +416,51 @@ function getInitials(name) {
 }
 
 
-// ==============================
+// ========================================
+// DESTINATION ICON
+// ========================================
+
+function getDestinationIcon(category) {
+
+    if (category === "history") {
+        return "🏛";
+    }
+
+    if (category === "nature") {
+        return "🌿";
+    }
+
+    if (category === "adventure") {
+        return "🏜";
+    }
+
+    if (category === "beaches") {
+        return "🌊";
+    }
+
+    return "📍";
+}
+
+
+// ========================================
+// CAPITALIZE CATEGORY
+// ========================================
+
+function capitalize(text) {
+
+    if (!text) {
+        return "";
+    }
+
+    return text.charAt(0).toUpperCase()
+        + text.slice(1);
+
+}
+
+
+// ========================================
 // LOGOUT
-// ==============================
+// ========================================
 
 document
     .getElementById("logoutBtn")
@@ -390,9 +473,7 @@ document
             window.location.href =
                 "../login.html";
 
-        }
-
-        catch (error) {
+        } catch (error) {
 
             console.error(
                 "Logout error:",
