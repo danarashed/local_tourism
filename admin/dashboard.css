@@ -6,8 +6,8 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: #f7f3ee;
-    color: #302a27;
+    background: #FAF7F2;
+    color: #2A2421;
 }
 
 a {
@@ -29,7 +29,7 @@ button {
 
 .sidebar {
     width: 260px;
-    background: #29221f;
+    background: #2B2421;
     color: white;
     padding: 25px 20px;
     display: flex;
@@ -50,7 +50,7 @@ button {
 .logo-icon {
     width: 36px;
     height: 36px;
-    background: #d35d3d;
+    background: #C85D3C;
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -65,7 +65,7 @@ button {
 
 .logo-area span {
     font-size: 9px;
-    color: #aaa19c;
+    color: #AFA5A0;
     letter-spacing: 1px;
 }
 
@@ -76,7 +76,7 @@ button {
 
 .menu-title {
     font-size: 10px;
-    color: #9c928c;
+    color: #AFA5A0;
     margin: 0 15px 15px;
     letter-spacing: 1px;
 }
@@ -97,7 +97,7 @@ button {
 }
 
 .menu-item.active {
-    background: #d35d3d;
+    background: #C85D3C;
     color: white;
 }
 
@@ -114,7 +114,7 @@ button {
 }
 
 .admin-user {
-    background: #382f2b;
+    background: #3A302C;
     border-radius: 12px;
     padding: 13px;
     display: flex;
