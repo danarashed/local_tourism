@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plan Your Jordanian Adventure</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="stylePlaneYourTrip.css">
+</head>
+<body>
+
+  <main class="page">
+    <header class="navbar">
+      <div class="brand">
+        <span class="brand-icon">●</span>
+        <span>LOCAL TOURISM</span>
+      </div>
+
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">Destinations</a>
+        <a href="#">Categories</a>
+        <a href="#" class="active">Plan Your Trip</a>
+        <a href="#">Community</a>
+        <a href="#">Leaderboard</a>
+        <a href="#">Map</a>
+        <a href="#">About Us</a>
+      </nav>
+
+      <div class="nav-right">
+        <span class="search">⌕</span>
+        <span class="lang">EN</span>
+        <button class="login">Log in</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-pill">✦ INTERACTIVE PLANNER</div>
+      <h1>Plan Your Jordanian Adventure</h1>
+      <p>Customize your route, choose travel styles, and discover handpicked<br>
+         trails. Design your tailor-made experience across the Kingdom of Jordan.</p>
+    </section>
+
+    <section class="planner">
+      <div class="filters">
+
+        <div class="filter-group">
+          <h4><span>01</span> TRIP DURATION</h4>
+          <label><input type="radio" name="duration"> 3 Days</label>
+          <label class="selected"><input type="radio" name="duration" checked> 5 Days</label>
+          <label><input type="radio" name="duration"> 7 Days</label>
+          <label><input type="radio" name="duration"> 10+ Days</label>
+        </div>
+
+        <div class="filter-group">
+          <h4><span>02</span> INTERESTS</h4>
+          <label class="selected"><input type="checkbox" checked> Historical Sites</label>
+          <label class="selected"><input type="checkbox" checked> Desert Adventures</label>
+          <label><input type="checkbox"> Beach & Relaxation</label>
+          <label><input type="checkbox"> Hiking & Nature</label>
+        </div>
+
+        <div class="filter-group">
+          <h4><span>03</span> PREFERENCES</h4>
+          <label class="selected"><input type="checkbox" checked> Petra & Wadi Rum</label>
+          <label><input type="checkbox"> Amman & Jerash</label>
+          <label><input type="checkbox"> Dead Sea & Aqaba</label>
+          <label><input type="checkbox"> Dana & Ajloun</label>
+        </div>
+
+        <div class="filter-group">
+          <h4><span>04</span> TRAVEL STYLE</h4>
+          <label><input type="radio" name="style"> Budget Friendly</label>
+          <label class="selected"><input type="radio" name="style" checked> Mid-Range Comfort</label>
+          <label><input type="radio" name="style"> Luxury Experience</label>
+          <label><input type="radio" name="style"> Backpacker</label>
+        </div>
+      </div>
+
+      <div class="content-grid">
+        <section class="recommendations">
+          <div class="section-heading">
+            <h2>Suggested Places For You</h2>
+            <p>Based on your choices, we've selected these spectacular spots in your personalized route.</p>
+          </div>
+
+          <div class="cards">
+
+            <article class="place-card">
+              <img src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=85" alt="Petra">
+              <div class="card-body">
+                <div class="meta"><span>HISTORICAL</span><b>♨ 4.9</b></div>
+                <h3>Petra Ruins</h3>
+                <p>The ancient Nabatean city carved into rose-red sandstone cliffs. Explore the Treasury, Monastery, and legendary paths.</p>
+                <button class="add-btn">＋ Add to Trip</button>
+              </div>
+            </article>
+
+            <article class="place-card">
+              <img src="https://images.unsplash.com/photo-1547234935-80c7145d2f3b?auto=format&fit=crop&w=900&q=85" alt="Wadi Rum">
+              <div class="card-body">
+                <div class="meta"><span>ADVENTURE</span><b>♨ 4.9</b></div>
+                <h3>Wadi Rum Valley</h3>
+                <p>Walk through dramatic red mountains and orange sand dunes. Experience Bedouin culture and breathtaking desert views.</p>
+                <button class="add-btn">＋ Add to Trip</button>
+              </div>
+            </article>
+
+            <article class="place-card">
+              <img src="https://images.unsplash.com/photo-1596005554384-d293674c91d7?auto=format&fit=crop&w=900&q=85" alt="Dead Sea">
+              <div class="card-body">
+                <div class="meta"><span>NATURE</span><b>♨ 4.8</b></div>
+                <h3>The Dead Sea</h3>
+                <p>Float in mineral-rich waters and enjoy a unique wellness retreat surrounded by spectacular desert landscapes.</p>
+                <button class="add-btn">＋ Add to Trip</button>
+              </div>
+            </article>
+
+            <article class="place-card">
+              <img src="https://images.unsplash.com/photo-1568322445389-f64ac2515020?auto=format&fit=crop&w=900&q=85" alt="Roman ruins">
+              <div class="card-body">
+                <div class="meta"><span>HISTORICAL</span><b>♨ 4.6</b></div>
+                <h3>Roman Jerash</h3>
+                <p>Walk among remarkably preserved Roman streets, columns, temples, and theaters in ancient Gerasa.</p>
+                <button class="add-btn">＋ Add to Trip</button>
+              </div>
+            </article>
+
+          </div>
+        </section>
+
+        <aside class="trip-box">
+          <div class="trip-title">
+            <div>
+              <span class="tiny-icon">▣</span>
+              <h2>My Trip Route</h2>
+            </div>
+            <span class="days-badge">5 DAYS</span>
+          </div>
+
+          <p class="trip-description">
+            Review your customized route. Drag elements to refine the<br>
+            sequence before you finalize your trip.
+          </p>
+
+          <div class="route-list">
+            <div class="route-item">
+              <div class="number">1</div>
+              <div class="route-text">
+                <strong>Petra Ruins</strong>
+                <small>Historical Site</small>
+              </div>
+              <span class="drag">⌃⌄ ×</span>
+            </div>
+
+            <div class="route-item">
+              <div class="number">2</div>
+              <div class="route-text">
+                <strong>Wadi Rum Valley</strong>
+                <small>Desert Adventure</small>
+              </div>
+              <span class="drag">⌃⌄ ×</span>
+            </div>
+
+            <div class="route-item">
+              <div class="number">3</div>
+              <div class="route-text">
+                <strong>The Dead Sea</strong>
+                <small>Nature & Relaxation</small>
+              </div>
+              <span class="drag">⌃⌄ ×</span>
+            </div>
+          </div>
+
+          <div class="trip-summary">
+            <div>
+              <span>Selected Duration</span>
+              <strong>5 Days</strong>
+            </div>
+            <div>
+              <span>Recommended Season</span>
+              <strong>Spring / Autumn</strong>
+            </div>
+          </div>
+
+          <button class="view-trip">View My Plan <span>→</span></button>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
