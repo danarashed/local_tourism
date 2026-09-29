@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | Local Tourism</title>
+
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="logo-area">
+            <div class="logo-icon">⌖</div>
+
+            <div>
+                <h2>LOCAL TOURISM</h2>
+                <span>ADMIN PORTAL</span>
+            </div>
+        </div>
+
+
+        <div class="menu-section">
+
+            <p class="menu-title">WORKSPACE</p>
+
+            <a href="dashboard.html" class="menu-item active">
+                <span>▦</span>
+                Dashboard
+            </a>
+
+            <a href="destinations.html" class="menu-item">
+                <span>⌖</span>
+                Manage Destinations
+            </a>
+
+            <a href="reviews.html" class="menu-item">
+                <span>▤</span>
+                Manage Reviews
+            </a>
+
+        </div>
+
+
+        <div class="menu-section website-section">
+
+            <p class="menu-title">WEBSITE</p>
+
+            <a href="../index.html" class="menu-item">
+                <span>↗</span>
+                View public site
+            </a>
+
+        </div>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="admin-user">
+
+                <div class="user-circle">
+                    LT
+                </div>
+
+                <div>
+                    <strong>Site Administrator</strong>
+                </div>
+
+            </div>
+
+            <button id="logoutBtn" class="logout-btn">
+                <span>↪</span>
+                Logout
+            </button>
+
+            <p class="copyright">
+                © 2026 Local Tourism Jordan
+            </p>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+        <header class="topbar">
+
+            <div>
+                <h1>Admin Dashboard</h1>
+                <p>Local Tourism Jordan · Content overview</p>
+            </div>
+
+            <div class="admin-info">
+
+                <a href="../index.html" class="view-site">
+                    ◉ &nbsp; View website
+                </a>
+
+                <div class="top-avatar">
+                    LT
+                </div>
+
+                <div class="admin-name">
+                    <strong>Administrator</strong>
+                    <span>● Online</span>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- CONTENT -->
+        <section class="content">
+
+            <div class="welcome-row">
+
+                <div>
+                    <span class="date">
+                        MONDAY, SEPTEMBER 28
+                    </span>
+
+                    <h2>Welcome back, Administrator</h2>
+
+                    <p>
+                        Here's what's happening across Local Tourism today.
+                    </p>
+                </div>
+
+                <a href="add-destination.html" class="add-btn">
+                    + &nbsp; Add destination
+                </a>
+
+            </div>
+
+
+            <!-- STATISTICS -->
+            <div class="stats">
+
+                <div class="stat-card">
+
+                    <div>
+                        <p>Total Destinations</p>
+                        <h3 id="destinationCount">0</h3>
+                        <span>Available destinations</span>
+                    </div>
+
+                    <div class="stat-icon destination-icon">
+                        ⌖
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div>
+                        <p>Total Reviews</p>
+                        <h3 id="reviewCount">0</h3>
+                        <span>All submitted reviews</span>
+                    </div>
+
+                    <div class="stat-icon review-icon">
+                        ▤
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div>
+                        <p>Pending Reviews</p>
+                        <h3 id="pendingCount">0</h3>
+                        <span>Requires moderation</span>
+                    </div>
+
+                    <div class="stat-icon pending-icon">
+                        ◷
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RECENT ACTIVITY -->
+            <div class="activity-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2>Recent Activity</h2>
+                        <p>
+                            Latest destination updates and traveler feedback from across Jordan.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="activity-grid">
+
+
+                    <!-- DESTINATIONS -->
+                    <div class="activity-card">
+
+                        <div class="card-header">
+
+                            <div>
+                                <h3>
+                                    Recently Added Destinations
+
+                                    <span id="newDestinationCount">
+                                        0 new
+                                    </span>
+                                </h3>
+                            </div>
+
+                            <a href="destinations.html">
+                                Manage all →
+                            </a>
+
+                        </div>
+
+
+                        <div id="destinationsList" class="list">
+                            <div class="loading">
+                                Loading destinations...
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- REVIEWS -->
+                    <div class="activity-card">
+
+                        <div class="card-header">
+
+                            <div>
+                                <h3>
+                                    Recent Reviews
+
+                                    <span id="pendingBadge">
+                                        0 pending
+                                    </span>
+                                </h3>
+                            </div>
+
+                            <a href="reviews.html">
+                                Review all →
+                            </a>
+
+                        </div>
+
+
+                        <div id="reviewsList" class="reviews-list">
+                            <div class="loading">
+                                Loading reviews...
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script type="module" src="dashboard.js"></script>
+
+</body>
+</html>
