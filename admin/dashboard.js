@@ -5,10 +5,10 @@ import {
     getDocs
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
-import {
-    onAuthStateChanged,
-    signOut
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+// import {
+//     onAuthStateChanged,
+//     signOut
+// } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 
 // ========================================
@@ -41,16 +41,10 @@ const reviewsList =
 // CHECK LOGIN
 // ========================================
 
-onAuthStateChanged(auth, async (user) => {
+import { requireAdmin, escapeHtml } from "../js/admin-guard.js";
 
-    if (!user) {
-        window.location.href = "../login.html";
-        return;
-    }
-
-    await loadDashboard();
-
-});
+await requireAdmin();
+await loadDashboard();
 
 
 // ========================================
