@@ -17,10 +17,25 @@
   <pre id="log"></pre>
 
   <script type="module">
-    import { db } from "./js/firebase.js";
-    import { doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+    let db, doc, setDoc, serverTimestamp;
 
     const log = (m) => document.getElementById("log").textContent += m + "\n";
+
+    window.addEventListener("error", (e) => log("JS error: " + e.message));
+    window.addEventListener("unhandledrejection", (e) => log("Promise error: " + (e.reason?.message || e.reason)));
+
+    async function loadFirebase() {
+      log("Loading ./js/firebase.js ...");
+      try {
+        ({ db } = await import("./js/firebase.js"));
+      } catch (err) {
+        throw new Error("Could not load ./js/firebase.js -> " + err.message +
+          "\n(تأكدي إنه الملف اسمه firebase.js وموجود بمجلد js، وإنه فيه: export const db = getFirestore(app);)");
+      }
+      if (!db) throw new Error("firebase.js لا يصدّر db. لازم يكون فيه: export const db = getFirestore(app);");
+      ({ doc, setDoc, serverTimestamp } = await import("https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js"));
+      log("Firebase loaded OK\n");
+    }
 
     const destinations = [
       { id: "petra", name: "Petra", nameAr: "البتراء", category: "history", location: "Ma'an Governorate", lat: 30.3285, lng: 35.4444, rating: 4.8, reviewCount: 2450, featured: true,
@@ -81,6 +96,7 @@
     document.getElementById("btn").onclick = async (e) => {
       e.target.disabled = true;
       try {
+        await loadFirebase();
         await seed("destinations", destinations);
         await seed("experiences", experiences);
         await seed("reviews", reviews);
